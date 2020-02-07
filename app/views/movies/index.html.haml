@@ -11,7 +11,7 @@
     %tr
       %th.hilite= link_to 'Movie Title', :action => "index", :sort_by=>'title'
       %th Rating
-      %th.hilite= link_to 'Release Date', :action => "index", :sort_by=>'rating'
+      %th.hilite= link_to 'Release Date', :action => "index", :sort_by=>'release_date'
       %th More Info
   %tbody
     - @movies.each do |movie|

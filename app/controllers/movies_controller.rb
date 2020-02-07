@@ -12,12 +12,30 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.all_ratings
-    ratings = params[:ratings]
-    if !ratings
-      @movies = Movie.order(params[:sort_by])
-    else 
-      @movies = Movie.order(params[:sort_by]).select{|movie| ratings.has_key?(movie.rating)}
+    @ratings = params[:ratings]
+    @sort_by = params[:sort_by]
+    restful_link = true
+    
+    if @ratings == nil
+      @ratings = session[:ratings]
+      restful_link &&= @ratings.nil?
     end
+    if @sort_by == nil
+      @sort_by = session[:sort_by]
+      restful_link &&= @sort_by.nil?
+    end
+    
+    if not restful_link
+      redirect_to(movies_path :action => "index", :sort_by=>@sort_by, :ratings=> @ratings)
+    end
+    
+    if !@ratings
+      @movies = Movie.order(@sort_by)
+    else 
+      @movies = Movie.order(@sort_by).select{|movie| @ratings.has_key?(movie.rating)}
+    end
+    session[:sort_by] = @sort_by
+    session[:ratings] = @ratings
   end
 
   def new
