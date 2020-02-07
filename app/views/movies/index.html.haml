@@ -4,9 +4,9 @@
 %table#movies.table.table-striped.col-md-12
   %thead
     %tr
-      %th Movie Title
+      %th.hilite= link_to 'Movie Title', :action => "index", :sort_by=>'title'
       %th Rating
-      %th Release Date
+      %th.hilite= link_to 'Release Date', :action => "index", :sort_by=>'rating'
       %th More Info
   %tbody
     - @movies.each do |movie|
@@ -14,6 +14,7 @@
         %td= movie.title
         %td= movie.rating
         %td= movie.release_date
+-# could be "link_to "More about #{movie.title}", movie" as movie is a routes
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
 = link_to 'Add new movie', new_movie_path
